@@ -5,7 +5,9 @@ BLANK=" "
 COMMA=","
 
 CRASH32="crash-arm"
+CRASH32_EXTENSIONS="/home/xinsu/tools/crashtool/crash-7.1.5-arm/extensions"
 CRASH64="crash-arm64"
+CRASH64_EXTENSIONS="/home/xinsu/tools/crashtool/crash-7.1.5-arm64/extensions"
 
 SYMBOLFILE="vmlinux"
 DUMPFILE="load.cmm"
@@ -24,8 +26,10 @@ fi
 
 if [ $# -eq 3 ] && [ $3 = "--32bit" ]; then
 	CRASH=${CRASH32}
+	CRASH_EXTENSIONS=${CRASH32_EXTENSIONS}
 else
 	CRASH=${CRASH64}
+	CRASH_EXTENSIONS=${CRASH64_EXTENSIONS}
 fi
 
 DUMPLIST=""
@@ -43,6 +47,9 @@ DUMPLIST=`echo ${DUMPLIST} | sed 's/\(.\)DDRC/\1,DDRC/g'`
 
 RUNCMD=${CRASH}${BLANK}${SYMBOLFILE}${BLANK}${DUMPLIST}
 
+export CRASH_EXTENSIONS
+
+echo ${CRASH_EXTENSIONS}
 echo ${RUNCMD}
 eval ${RUNCMD}
 
